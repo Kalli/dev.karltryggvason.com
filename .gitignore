@@ -1,0 +1,17 @@
+# Hugo build output
+/public/
+/resources/_gen/
+
+# Hugo cache and lock files
+.hugo_build.lock
+
+# Temporary files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE files
+.zed/
+*~
+
+# OS files
+.DS_Store

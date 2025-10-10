@@ -1,0 +1,31 @@
+    [[main]]
+        name = "Website"
+        url = "https://karltryggvason.com"
+        weight = 10
+        [main.params]
+            target = "_blank"
+    
+    [[main]]
+    name = "CV"
+    url = "https://cv.karltryggvason.com"
+    weight = 30
+    [main.params]
+        target = "_blank"
+    
+    [[main]]
+        name = "rss"
+        url = "/index.xml"
+        weight = 30
+        [main.params]
+            icon = "rss"
+            showName = false
+            target = "_blank"
+        
+    [[main]]
+    name = "GitHub"
+    url = "https://github.com/kalli/"
+    weight = 30
+    [main.params]
+        icon = "github"
+        showName = false
+        target = "_blank"

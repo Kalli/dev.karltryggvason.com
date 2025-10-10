@@ -1,0 +1,5 @@
+homepage.showRecent = true
+homepage.layout = "page"
+colorScheme = "slate"
+footer.showAppearanceSwitcher = true
+article.showAuthor = false

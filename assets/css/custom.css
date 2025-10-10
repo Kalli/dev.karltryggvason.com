@@ -1,0 +1,8 @@
+/* Smaller font for hugo/congo attrib*/
+footer > div > div > p {
+    font-size: 10px !important;
+}
+/* Smaller badding, because of smaller fonts above */
+footer {
+    padding-top: 1rem !important;
+}

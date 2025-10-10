@@ -1,0 +1,9 @@
+baseURL = 'https://dev.karltryggvason.com/'
+languageCode = 'en'
+title = 'Karl Tryggvason - Developer blog'
+
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
