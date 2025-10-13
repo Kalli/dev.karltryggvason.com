@@ -7,3 +7,6 @@ title = 'Karl Tryggvason - Developer blog'
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+
+[permalinks]
+    posts = "/:title/"
