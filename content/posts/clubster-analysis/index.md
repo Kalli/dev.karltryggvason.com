@@ -1,6 +1,10 @@
 +++
 date = '2025-11-06T10:59:17+02:00'
-title = "How I analyzed the lineups at the world's most popular clubs"
+title = "How I analyzed the lineups at the world's most popular nightclubs"
+aliases = [
+    "how-i-analyzed-the-lineups-at-the-worlds-most-popular-clubs",
+    "how-i-analyzed-the-lineups-at-the-worlds-most-popular-nightclubs"
+]
 +++
 
 A few years back I did a bit of dance music related data visualization over at [Lazily Evaluated](https://lazilyevaluated.co/). My favourite was an analysis of clubs and their lineups using [Resident Advisor / RA](https://ra.co) data, I called it [_Clubster Analysis_](https://lazilyevaluated.co/clubster-analysis/). I always wanted to dig into the technical aspects of gathering the data, analyzing it and building the charts and graphs to tell a story and give people insight. With this blog I now have the right venue for that kind of tech talk, so here goes.
