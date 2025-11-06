@@ -6,3 +6,7 @@ footer > div > div > p {
 footer {
     padding-top: 1rem !important;
 }
+
+figcaption {
+    text-align: center;
+}
