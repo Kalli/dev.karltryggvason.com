@@ -14,3 +14,5 @@ I'm still not fully onboard with the agentic ai workflows, I still find them a b
 I also like their [tasks](https://zed.dev/docs/task) functionality that neatly lets you combine the editor interface to command line tools. When I'm working, I often set that up to execute specific tests, run some [sql clean up](https://dev.karltryggvason.com/sqlyac-structure-and-tooling-for-your-sql-files/) or http requests, related to whatever feature or bug I'm fixing. That way I can set up complex scripts but (re)run them repeatedly with ease without leaving my editor.
 
 Overall I'm quite happy with Zed. I think I will be sticking with it for the foreseeable future. If you are in the market for an editor, I recommend trying it out.
+
+_Update 2025/11/17: On November 13th the Zed team [wrote about](https://zed.dev/blog/zed-is-our-office) how they use the collaborative features of Zed as a virtual office. I was surprised to see this blog post listed in the "Community quotes" section of their meeting. I did not foresee this post reaching the Zed team, it's a small world. Thanks for reading, keep on shipping!_
