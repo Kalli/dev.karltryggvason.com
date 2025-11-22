@@ -1,0 +1,1092 @@
+<style>
+    .card-front,
+    .card-back {
+        display: none;
+    }
+    .card-front.active,
+    .card-back.active {
+        display: block;
+    }
+    /* Scoped zinc palette for flashcards only */
+    #flashcard-container {
+        --zinc-50: #fafafa;
+        --zinc-100: #f4f4f5;
+        --zinc-400: #a1a1aa;
+        --zinc-500: #71717a;
+        --zinc-600: #52525b;
+        --zinc-700: #3f3f46;
+        --zinc-800: #27272a;
+        --zinc-900: #18181b;
+        --zinc-950: #09090b;
+
+        --emerald-300: #6ee7b7;
+        --emerald-400: #34d399;
+        --emerald-500: #10b981;
+        --emerald-600: #059669;
+    }
+
+    #flashcard-container {
+        background: var(--zinc-950);
+        color: var(--zinc-100);
+    }
+
+    #flashcard-container .bg-zinc-950 {
+        background-color: var(--zinc-950);
+    }
+    #flashcard-container .bg-zinc-900 {
+        background-color: var(--zinc-900);
+    }
+    #flashcard-container .bg-zinc-800 {
+        background-color: var(--zinc-800);
+    }
+    #flashcard-container .text-zinc-100 {
+        color: var(--zinc-100);
+    }
+    #flashcard-container .text-zinc-400 {
+        color: var(--zinc-400);
+    }
+    #flashcard-container .text-zinc-500 {
+        color: var(--zinc-500);
+    }
+    #flashcard-container .text-zinc-600 {
+        color: var(--zinc-600);
+    }
+    #flashcard-container .text-zinc-700 {
+        color: var(--zinc-700);
+    }
+    #flashcard-container .border-zinc-700 {
+        border-color: var(--zinc-700);
+    }
+    #flashcard-container .border-zinc-800 {
+        border-color: var(--zinc-800);
+    }
+    #flashcard-container .text-emerald-300 {
+        color: var(--emerald-300);
+    }
+    #flashcard-container .text-emerald-400 {
+        color: var(--emerald-400);
+    }
+    #flashcard-container .text-emerald-500 {
+        color: var(--emerald-500);
+    }
+    #flashcard-container .text-emerald-600 {
+        color: var(--emerald-600);
+    }
+    #flashcard-container .bg-emerald-600 {
+        background-color: var(--emerald-600);
+    }
+    #flashcard-container .hover\:bg-zinc-700:hover {
+        background-color: var(--zinc-700);
+    }
+    #flashcard-container .hover\:text-emerald-400:hover {
+        color: var(--emerald-400);
+    }
+    #flashcard-container .hover\:border-emerald-600:hover {
+        border-color: var(--emerald-600);
+    }
+
+    #card {
+        min-height: 400px;
+    }
+    #attribution {
+        padding-bottom: 1em;
+    }
+    .text-3xl {
+        font-size: 2.5rem;
+        line-height: 2rem;
+    }
+
+    .font-mono {
+        font-family: monospace;
+    }
+    .mr-1 {
+        margin-right: 1em;
+    }
+    .pt-1 {
+        padding-top: 1em;
+    }
+</style>
+
+<div class="rounded px-4" id="flashcard-container">
+    <div class="bg-zinc-950 text-zinc-100 mb-8 pt-1">
+        <div class="flex items-stretch justify-between pt-1">
+            <h1
+                id="title"
+                class="text-4xl font-mono text-emerald-400 align-middle"
+            >
+                bash :: shortcuts
+            </h1>
+            <div class="mr-2 mt-1">
+                <button
+                    id="bash-btn"
+                    class="mr-1 shell-btn px-4 py-2 rounded font-mono text-sm transition bg-emerald-600 text-white"
+                >
+                    bash
+                </button>
+                <button
+                    id="zsh-btn"
+                    class="mr-1 shell-btn px-4 py-2 rounded font-mono text-sm transition bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+                >
+                    zsh
+                </button>
+            </div>
+        </div>
+        <p class="text-zinc-500 font-mono text-sm m-2 p-1">
+            <span class="m-3 p-2" id="counter">1 / 47</span>
+            <span class="ml-4 text-zinc-600"
+                >[space: flip | ←/→: nav | r: random | m: mode]</span
+            >
+        </p>
+    </div>
+
+    <!-- Filter buttons -->
+    <div id="filters" class="mb-6 flex gap-2 flex-wrap">
+        <!-- Populated by JS -->
+    </div>
+
+    <!-- Flashcard -->
+    <div
+        id="card"
+        class="bg-zinc-900 text-xl border-2 border-zinc-700 rounded-lg p-12 flex items-center justify-center cursor-pointer hover:border-emerald-600 transition-all duration-200 mb-6"
+    >
+        <!-- Populated by JS -->
+    </div>
+
+    <!-- Navigation buttons -->
+    <div class="flex gap-4 justify-center">
+        <button
+            id="prev-btn"
+            class="m-1 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded font-mono transition"
+        >
+            ← prev
+        </button>
+        <button
+            id="random-btn"
+            class="m-1 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded font-mono transition"
+        >
+            random
+        </button>
+        <button
+            id="next-btn"
+            class="m-1 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded font-mono transition"
+        >
+            next →
+        </button>
+    </div>
+
+    <!-- Attribution -->
+    <div
+        id="attribution"
+        class="mt-12 !mb-2 border-t border-zinc-800 text-center"
+    >
+        <p class="text-zinc-600 text-sm font-mono">
+            bash shortcuts from
+            <a
+                href="https://skorks.com/2009/09/bash-shortcuts-for-maximum-productivity/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-emerald-500 hover:text-emerald-400 transition underline"
+            >
+                skorks.com
+            </a>
+            | zsh shortcuts from
+            <a
+                href="https://copperlight.github.io/shell/zsh-keyboard-shortcuts/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-emerald-500 hover:text-emerald-400 transition underline"
+            >
+                copperlight.github.io
+            </a>
+        </p>
+    </div>
+
+    <script>
+        // Data
+        const BASH_SHORTCUTS = {
+            "Command Editing": [
+                {
+                    key: "Ctrl + a",
+                    desc: "Go to start of command line",
+                    example: {
+                        before: "grep -r 'patter█' /var/log",
+                        after: "█grep -r 'pattern' /var/log",
+                    },
+                },
+                {
+                    key: "Ctrl + e",
+                    desc: "Go to end of command line",
+                    example: {
+                        before: "█grep -r 'pattern' /var/log",
+                        after: "grep -r 'pattern' /var/log█",
+                    },
+                },
+                {
+                    key: "Ctrl + k",
+                    desc: "Delete from cursor to end of line",
+                    example: {
+                        before: "rm -rf /tmp/█cache/*.txt",
+                        after: "rm -rf /tmp/█",
+                    },
+                },
+                {
+                    key: "Ctrl + u",
+                    desc: "Delete from cursor to start of line",
+                    example: {
+                        before: "rm -rf /tmp/█cache/*.txt",
+                        after: "█cache/*.txt",
+                    },
+                },
+                {
+                    key: "Ctrl + w",
+                    desc: "Delete backwards one word",
+                    example: {
+                        before: "docker exec -it container█ bash",
+                        after: "docker exec -it █ bash",
+                    },
+                },
+                {
+                    key: "Ctrl + y",
+                    desc: "Paste word/text that was cut",
+                    example: {
+                        before: "git commit -m █",
+                        after: "git commit -m 'fixes bug'█",
+                        note: "(after ctrl+w cut 'fixes bug')",
+                    },
+                },
+                {
+                    key: "Ctrl + xx",
+                    desc: "Toggle between start of line and cursor",
+                    example: {
+                        before: "npm install express█ cors",
+                        after: "█npm install express cors",
+                    },
+                },
+                {
+                    key: "Alt + b",
+                    desc: "Move backward one word",
+                    example: {
+                        before: "find . -name '*.js' -type█ f",
+                        after: "find . -name '*.js'█ -type f",
+                    },
+                },
+                {
+                    key: "Alt + f",
+                    desc: "Move forward one word",
+                    example: {
+                        before: "find . █-name '*.js' -type f",
+                        after: "find . -name█ '*.js' -type f",
+                    },
+                },
+                {
+                    key: "Alt + d",
+                    desc: "Delete to end of word from cursor",
+                    example: {
+                        before: "systemctl restart █nginx.service",
+                        after: "systemctl restart █.service",
+                    },
+                },
+                {
+                    key: "Alt + c",
+                    desc: "Capitalize to end of word",
+                    example: {
+                        before: "echo hello █world",
+                        after: "echo hello World█",
+                    },
+                },
+                {
+                    key: "Alt + u",
+                    desc: "Uppercase from cursor to end of word",
+                    example: {
+                        before: "export path█_to_bin=/usr/local",
+                        after: "export PATH█_TO_BIN=/usr/local",
+                    },
+                },
+                {
+                    key: "Alt + l",
+                    desc: "Lowercase from cursor to end of word",
+                    example: {
+                        before: "mv FILE█NAME.txt ./docs",
+                        after: "mv filename█.txt ./docs",
+                    },
+                },
+                {
+                    key: "Alt + t",
+                    desc: "Swap current word with previous",
+                    example: {
+                        before: "git add --patch█ file.js",
+                        after: "git --patch add█ file.js",
+                    },
+                },
+                {
+                    key: "Ctrl + f",
+                    desc: "Move forward one character",
+                    example: { before: "cd█ /var/log", after: "cd █/var/log" },
+                },
+                {
+                    key: "Ctrl + b",
+                    desc: "Move backward one character",
+                    example: { before: "cd /█var/log", after: "cd█ /var/log" },
+                },
+                {
+                    key: "Ctrl + d",
+                    desc: "Delete character under cursor",
+                    example: { before: "rm█x temp.log", after: "rm█ temp.log" },
+                },
+                {
+                    key: "Ctrl + h",
+                    desc: "Delete character before cursor",
+                    example: { before: "rmx█ temp.log", after: "rm█ temp.log" },
+                },
+                {
+                    key: "Ctrl + t",
+                    desc: "Swap character with previous one",
+                    example: {
+                        before: "grep -rn█ pattern",
+                        after: "grep -nr█ pattern",
+                    },
+                },
+            ],
+            "Command Recall": [
+                {
+                    key: "Ctrl + r",
+                    desc: "Search history backwards",
+                    example: {
+                        before: "(reverse-i-search)`doc█': ",
+                        after: "docker ps -a",
+                    },
+                },
+                {
+                    key: "Ctrl + g",
+                    desc: "Escape from history search",
+                    example: {
+                        before: "(reverse-i-search)`git': git log",
+                        after: "█",
+                    },
+                },
+                {
+                    key: "Ctrl + p",
+                    desc: "Previous command in history",
+                    example: {
+                        before: "█",
+                        after: "npm test█",
+                        note: "(your last command)",
+                    },
+                },
+                {
+                    key: "Ctrl + n",
+                    desc: "Next command in history",
+                    example: {
+                        before: "git add .█",
+                        after: "git commit -m 'fix'█",
+                        note: "(if you went back too far)",
+                    },
+                },
+                {
+                    key: "Alt + .",
+                    desc: "Use last word of previous command",
+                    example: {
+                        before: "cat █",
+                        after: "cat /var/log/app.log█",
+                        note: "(after: ls /var/log/app.log)",
+                    },
+                },
+            ],
+            "Command Control": [
+                {
+                    key: "Ctrl + l",
+                    desc: "Clear screen",
+                    example: {
+                        before: "[lots of output]\n$ █",
+                        after: "$ █",
+                        note: "(screen cleared)",
+                    },
+                },
+                {
+                    key: "Ctrl + s",
+                    desc: "Stop output to screen",
+                    example: {
+                        before: "[streaming logs...]\n[paused]█",
+                        after: "[frozen output]",
+                        note: "(output frozen)",
+                    },
+                },
+                {
+                    key: "Ctrl + q",
+                    desc: "Allow output to screen",
+                    example: {
+                        before: "[frozen output]",
+                        after: "[streaming logs...]\n█",
+                        note: "(output resumed)",
+                    },
+                },
+                {
+                    key: "Ctrl + c",
+                    desc: "Terminate command",
+                    example: {
+                        before: "running forever...\n^C█",
+                        after: "$ █",
+                        note: "(process killed)",
+                    },
+                },
+                {
+                    key: "Ctrl + z",
+                    desc: "Suspend/stop command",
+                    example: {
+                        before: "vim file.txt\n^Z",
+                        after: "[1]+ Stopped vim\n$ █",
+                        note: "(use 'fg' to resume)",
+                    },
+                },
+            ],
+            "Bang (!) Commands": [
+                {
+                    key: "!!",
+                    desc: "Run last command",
+                    example: {
+                        before: "$ !!█",
+                        after: "$ sudo apt update",
+                        note: "(reruns: apt update)",
+                    },
+                },
+                {
+                    key: "!blah",
+                    desc: "Run most recent command starting with 'blah'",
+                    example: {
+                        before: "$ !git█",
+                        after: "$ git status",
+                        note: "(last cmd starting w/ git)",
+                    },
+                },
+                {
+                    key: "!blah:p",
+                    desc: "Print command that !blah would run",
+                    example: {
+                        before: "$ !doc:p█",
+                        after: "docker ps -a\n$ ",
+                        note: "(prints without running)",
+                    },
+                },
+                {
+                    key: "!$",
+                    desc: "Last word of previous command",
+                    example: {
+                        before: "$ vim !$█",
+                        after: "$ vim README.md",
+                        note: "(after: cat README.md)",
+                    },
+                },
+                {
+                    key: "!$:p",
+                    desc: "Print what !$ would substitute",
+                    example: {
+                        before: "$ !$:p█",
+                        after: "README.md\n$ ",
+                        note: "(shows substitution)",
+                    },
+                },
+                {
+                    key: "!*",
+                    desc: "Previous command except last word",
+                    example: {
+                        before: "$ !*█ newfile.txt",
+                        after: "$ find . -name newfile.txt",
+                        note: "(after: find . -name old.txt)",
+                    },
+                },
+                {
+                    key: "!*:p",
+                    desc: "Print what !* would substitute",
+                    example: {
+                        before: "$ !*:p█",
+                        after: "find . -name\n$ ",
+                        note: "(shows all but last word)",
+                    },
+                },
+                {
+                    key: "^old^new",
+                    desc: "Substitute 'old' with 'new' in previous command",
+                    example: {
+                        before: "$ ^test^prod█",
+                        after: "$ deploy --env=prod",
+                        note: "(after: deploy --env=test)",
+                    },
+                },
+            ],
+        };
+
+        const ZSH_SHORTCUTS = {
+            "Command Editing": [
+                {
+                    key: "Ctrl + a",
+                    desc: "Go to start of command line",
+                    example: {
+                        before: "grep -r 'patter█' /var/log",
+                        after: "█grep -r 'pattern' /var/log",
+                    },
+                },
+                {
+                    key: "Ctrl + e",
+                    desc: "Go to end of command line",
+                    example: {
+                        before: "█grep -r 'pattern' /var/log",
+                        after: "grep -r 'pattern' /var/log█",
+                    },
+                },
+                {
+                    key: "Ctrl + k",
+                    desc: "Delete from cursor to end of line",
+                    example: {
+                        before: "rm -rf /tmp/█cache/*.txt",
+                        after: "rm -rf /tmp/█",
+                    },
+                },
+                {
+                    key: "Ctrl + u",
+                    desc: "Delete entire line (kill-whole-line)",
+                    example: {
+                        before: "rm -rf /tmp/█cache/*.txt",
+                        after: "█",
+                        note: "(zsh deletes WHOLE line, not just to start)",
+                    },
+                },
+                {
+                    key: "Ctrl + w",
+                    desc: "Delete backwards one word",
+                    example: {
+                        before: "docker exec -it container█ bash",
+                        after: "docker exec -it █ bash",
+                        note: "(smarter about paths in zsh)",
+                    },
+                },
+                {
+                    key: "Ctrl + y",
+                    desc: "Paste word/text that was cut",
+                    example: {
+                        before: "git commit -m █",
+                        after: "git commit -m 'fixes bug'█",
+                        note: "(after ctrl+w cut 'fixes bug')",
+                    },
+                },
+                {
+                    key: "Ctrl + xx",
+                    desc: "Toggle between start of line and cursor",
+                    example: {
+                        before: "npm install express█ cors",
+                        after: "█npm install express cors",
+                    },
+                },
+                {
+                    key: "Ctrl + [, b",
+                    desc: "Move backward one word",
+                    example: {
+                        before: "find . -name '*.js' -type█ f",
+                        after: "find . -name '*.js'█ -type f",
+                        note: "(Ctrl+[ is ESC, then b)",
+                    },
+                },
+                {
+                    key: "Ctrl + [, f",
+                    desc: "Move forward one word",
+                    example: {
+                        before: "find . █-name '*.js' -type f",
+                        after: "find . -name█ '*.js' -type f",
+                        note: "(Ctrl+[ is ESC, then f)",
+                    },
+                },
+                {
+                    key: "Ctrl + [, d",
+                    desc: "Delete to end of word from cursor",
+                    example: {
+                        before: "systemctl restart █nginx.service",
+                        after: "systemctl restart █.service",
+                    },
+                },
+                {
+                    key: "Ctrl + [, l",
+                    desc: "Lowercase from cursor to end of word",
+                    example: {
+                        before: "mv FILE█NAME.txt ./docs",
+                        after: "mv filename█.txt ./docs",
+                    },
+                },
+                {
+                    key: "Ctrl + [, u",
+                    desc: "Uppercase from cursor to end of word",
+                    example: {
+                        before: "export path█_to_bin=/usr/local",
+                        after: "export PATH█_TO_BIN=/usr/local",
+                    },
+                },
+                {
+                    key: "Ctrl + [, t",
+                    desc: "Swap current word with previous",
+                    example: {
+                        before: "git add --patch█ file.js",
+                        after: "git --patch add█ file.js",
+                    },
+                },
+                {
+                    key: "Ctrl + f",
+                    desc: "Move forward one character",
+                    example: { before: "cd█ /var/log", after: "cd █/var/log" },
+                },
+                {
+                    key: "Ctrl + b",
+                    desc: "Move backward one character",
+                    example: { before: "cd /█var/log", after: "cd█ /var/log" },
+                },
+                {
+                    key: "Ctrl + d",
+                    desc: "Delete character under cursor",
+                    example: { before: "rm█x temp.log", after: "rm█ temp.log" },
+                },
+                {
+                    key: "Ctrl + h",
+                    desc: "Delete character before cursor",
+                    example: { before: "rmx█ temp.log", after: "rm█ temp.log" },
+                },
+                {
+                    key: "Ctrl + t",
+                    desc: "Swap character with previous one",
+                    example: {
+                        before: "Grep -rn█ pattern",
+                        after: "grep -nr█ pattern",
+                    },
+                },
+                {
+                    key: "Ctrl + [, '",
+                    desc: "Quote entire line",
+                    example: {
+                        before: "echo hello world█",
+                        after: "'echo hello world'█",
+                    },
+                },
+                {
+                    key: "Ctrl + x, Ctrl + u",
+                    desc: "Undo last change",
+                    example: {
+                        before: "git commit -m 'oops'█",
+                        after: "git commit█",
+                        note: "(after accidental text)",
+                    },
+                },
+            ],
+            "Command Recall": [
+                {
+                    key: "Ctrl + r",
+                    desc: "Search history backwards",
+                    example: {
+                        before: "(reverse-i-search)`doc█': ",
+                        after: "docker ps -a",
+                    },
+                },
+                {
+                    key: "Ctrl + g",
+                    desc: "Escape from history search",
+                    example: {
+                        before: "(reverse-i-search)`git': git log",
+                        after: "█",
+                    },
+                },
+                {
+                    key: "Ctrl + p / ↑",
+                    desc: "Previous command in history",
+                    example: {
+                        before: "█",
+                        after: "npm test█",
+                        note: "(your last command)",
+                    },
+                },
+                {
+                    key: "Ctrl + n / ↓",
+                    desc: "Next command in history",
+                    example: {
+                        before: "git add .█",
+                        after: "git commit -m 'fix'█",
+                        note: "(if you went back too far)",
+                    },
+                },
+                {
+                    key: "Ctrl + [, .",
+                    desc: "Use last word of previous command",
+                    example: {
+                        before: "cat █",
+                        after: "cat /var/log/app.log█",
+                        note: "(after: ls /var/log/app.log)",
+                    },
+                },
+            ],
+            "Command Control": [
+                {
+                    key: "Ctrl + l",
+                    desc: "Clear screen",
+                    example: {
+                        before: "[lots of output]\n$ █",
+                        after: "$ █",
+                        note: "(screen cleared)",
+                    },
+                },
+                {
+                    key: "Ctrl + s",
+                    desc: "Stop output to screen",
+                    example: {
+                        before: "[streaming logs...]\n[paused]█",
+                        after: "[frozen output]",
+                        note: "(output frozen)",
+                    },
+                },
+                {
+                    key: "Ctrl + q",
+                    desc: "Allow output to screen",
+                    example: {
+                        before: "[frozen output]",
+                        after: "[streaming logs...]\n█",
+                        note: "(output resumed)",
+                    },
+                },
+                {
+                    key: "Ctrl + c",
+                    desc: "Terminate command",
+                    example: {
+                        before: "running forever...\n^C█",
+                        after: "$ █",
+                        note: "(process killed)",
+                    },
+                },
+                {
+                    key: "Ctrl + z",
+                    desc: "Suspend/stop command",
+                    example: {
+                        before: "vim file.txt\n^Z",
+                        after: "[1]+ Stopped vim\n$ █",
+                        note: "(use 'fg' to resume)",
+                    },
+                },
+            ],
+            "Bang (!) Commands": [
+                {
+                    key: "!!",
+                    desc: "Run last command",
+                    example: {
+                        before: "$ !!█",
+                        after: "$ sudo apt update",
+                        note: "(reruns: apt update)",
+                    },
+                },
+                {
+                    key: "!blah",
+                    desc: "Run most recent command starting with 'blah'",
+                    example: {
+                        before: "$ !git█",
+                        after: "$ git status",
+                        note: "(last cmd starting w/ git)",
+                    },
+                },
+                {
+                    key: "!blah:p",
+                    desc: "Print command that !blah would run",
+                    example: {
+                        before: "$ !doc:p█",
+                        after: "docker ps -a\n$ ",
+                        note: "(prints without running)",
+                    },
+                },
+                {
+                    key: "!$",
+                    desc: "Last word of previous command",
+                    example: {
+                        before: "$ vim !$█",
+                        after: "$ vim README.md",
+                        note: "(after: cat README.md)",
+                    },
+                },
+                {
+                    key: "!$:p",
+                    desc: "Print what !$ would substitute",
+                    example: {
+                        before: "$ !$:p█",
+                        after: "README.md\n$ ",
+                        note: "(shows substitution)",
+                    },
+                },
+                {
+                    key: "!*",
+                    desc: "Previous command except last word",
+                    example: {
+                        before: "$ !*█ newfile.txt",
+                        after: "$ find . -name newfile.txt",
+                        note: "(after: find . -name old.txt)",
+                    },
+                },
+                {
+                    key: "!*:p",
+                    desc: "Print what !* would substitute",
+                    example: {
+                        before: "$ !*:p█",
+                        after: "find . -name\n$ ",
+                        note: "(shows all but last word)",
+                    },
+                },
+                {
+                    key: "^old^new",
+                    desc: "Substitute 'old' with 'new' in previous command",
+                    example: {
+                        before: "$ ^test^prod█",
+                        after: "$ deploy --env=prod",
+                        note: "(after: deploy --env=test)",
+                    },
+                },
+            ],
+        };
+
+        // State
+        let state = {
+            shell: "bash",
+            currentIdx: 0,
+            flipped: false,
+            filter: "all",
+            mode: "key", // 'key' or 'desc'
+        };
+
+        // Helpers
+        function getShortcuts() {
+            return state.shell === "bash" ? BASH_SHORTCUTS : ZSH_SHORTCUTS;
+        }
+
+        function getAllCards() {
+            const shortcuts = getShortcuts();
+            return Object.entries(shortcuts).flatMap(([cat, cards]) =>
+                cards.map((c) => ({ ...c, category: cat })),
+            );
+        }
+
+        function getFilteredCards() {
+            const all = getAllCards();
+            if (state.filter === "all") return all;
+            return all.filter((c) => c.category === state.filter);
+        }
+
+        function getCurrentCard() {
+            return getFilteredCards()[state.currentIdx] || getAllCards()[0];
+        }
+
+        // Render functions
+        function renderTitle() {
+            document.getElementById("title").textContent =
+                `${state.shell} :: shortcuts`;
+        }
+
+        function renderShellButtons() {
+            const bashBtn = document.getElementById("bash-btn");
+            const zshBtn = document.getElementById("zsh-btn");
+
+            if (state.shell === "bash") {
+                bashBtn.className =
+                    "mr-1 shell-btn px-4 py-2 rounded font-mono text-sm transition bg-emerald-600 text-white";
+                zshBtn.className =
+                    "shell-btn px-4 py-2 rounded font-mono text-sm transition bg-zinc-800 text-zinc-400 hover:bg-zinc-700";
+            } else {
+                bashBtn.className =
+                    "mr-1 shell-btn px-4 py-2 rounded font-mono text-sm transition bg-zinc-800 text-zinc-400 hover:bg-zinc-700";
+                zshBtn.className =
+                    "shell-btn px-4 py-2 rounded font-mono text-sm transition bg-emerald-600 text-white";
+            }
+        }
+
+        function renderCounter() {
+            const filtered = getFilteredCards();
+            document.getElementById("counter").textContent =
+                `${state.currentIdx + 1} / ${filtered.length}`;
+        }
+
+        function renderFilters() {
+            const container = document.getElementById("filters");
+            const categories = Object.keys(getShortcuts());
+
+            let html = `
+            <button class="m-1 p-2 filter-btn px-4 py-2 rounded font-mono text-sm transition ${
+                state.filter === "all"
+                    ? "bg-emerald-600 text-white"
+                    : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+            }" data-filter="all">all</button>
+        `;
+
+            categories.forEach((cat) => {
+                html += `
+                <button class="m-1 filter-btn px-4 py-2 rounded font-mono text-sm transition ${
+                    state.filter === cat
+                        ? "bg-emerald-600 text-white"
+                        : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+                }" data-filter="${cat}">${cat.toLowerCase()}</button>
+            `;
+            });
+
+            html += `
+            <button id="mode-btn" class="m-1 px-4 py-2 rounded font-mono text-sm bg-zinc-800 text-zinc-400 hover:bg-zinc-700 transition ml-auto">
+                mode: ${state.mode}→answer
+            </button>
+        `;
+
+            container.innerHTML = html;
+
+            // Attach event listeners
+            document.querySelectorAll(".filter-btn").forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    state.filter = btn.dataset.filter;
+                    state.currentIdx = 0;
+                    state.flipped = false;
+                    render();
+                });
+            });
+
+            document
+                .getElementById("mode-btn")
+                .addEventListener("click", () => {
+                    state.mode = state.mode === "key" ? "desc" : "key";
+                    state.flipped = false;
+                    render();
+                });
+        }
+
+        function renderCard() {
+            const card = getCurrentCard();
+            const container = document.getElementById("card");
+
+            const frontContent = state.mode === "key" ? card.key : card.desc;
+            const backContent = state.mode === "key" ? card.desc : card.key;
+            const frontQuestion =
+                state.mode === "key"
+                    ? "What does it do?"
+                    : "What's the shortcut?";
+            const backReminder =
+                "Remember: " +
+                (state.mode === "key" ? `${card.key}` : `${card.desc}`);
+
+            let html = `
+            <div class="text-center w-full max-w-2xl">
+                <div class="text-zinc-600 font-mono">${card.category}</div>
+        `;
+
+            if (!state.flipped) {
+                html += `
+                <div class="mt-1 text-2xl font-mono text-emerald-300">${frontContent}</div>
+                <div class="text-zinc-500 mt-6">[${frontQuestion}]</div>
+            `;
+            } else {
+                html += `
+                <div class="text-2xl font-mono mb-3 text-zinc-400">${backContent}</div>
+            `;
+
+                if (card.example) {
+                    html += `
+                    <div class="mt-6 bg-zinc-950 border border-zinc-700 rounded p-4 text-left">
+                        <div class="mb-3">
+                            <div class="text-xs text-zinc-600 mb-1">before:</div>
+                            <div class="font-mono text-emerald-400 whitespace-pre">${card.example.before}</div>
+                        </div>
+                        <div class="text-zinc-700 text-center my-2">↓</div>
+                        <div>
+                            <div class="text-xs text-zinc-600 mb-1">after:</div>
+                            <div class="font-mono text-emerald-300 whitespace-pre">${card.example.after}</div>
+                        </div>
+                        ${card.example.note ? `<div class="text-xs text-zinc-500 mt-3 italic">${card.example.note}</div>` : ""}
+                    </div>
+                `;
+                }
+
+                html += `<div class="text-emerald-600 mt-6 font-mono">${backReminder}</div>`;
+            }
+
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function render() {
+            renderTitle();
+            renderShellButtons();
+            renderCounter();
+            renderFilters();
+            renderCard();
+        }
+
+        // Navigation
+        function next() {
+            const filtered = getFilteredCards();
+            state.currentIdx = (state.currentIdx + 1) % filtered.length;
+            state.flipped = false;
+            render();
+        }
+
+        function prev() {
+            const filtered = getFilteredCards();
+            state.currentIdx =
+                (state.currentIdx - 1 + filtered.length) % filtered.length;
+            state.flipped = false;
+            render();
+        }
+
+        function random() {
+            const filtered = getFilteredCards();
+            state.currentIdx = Math.floor(Math.random() * filtered.length);
+            state.flipped = false;
+            render();
+        }
+
+        function flip() {
+            state.flipped = !state.flipped;
+            render();
+        }
+
+        // Event listeners
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initial render
+            render();
+
+            // Shell buttons
+            document
+                .getElementById("bash-btn")
+                .addEventListener("click", () => {
+                    state.shell = "bash";
+                    state.currentIdx = 0;
+                    state.flipped = false;
+                    render();
+                });
+
+            document.getElementById("zsh-btn").addEventListener("click", () => {
+                state.shell = "zsh";
+                state.currentIdx = 0;
+                state.flipped = false;
+                render();
+            });
+
+            // Nav buttons
+            document.getElementById("prev-btn").addEventListener("click", prev);
+            document.getElementById("next-btn").addEventListener("click", next);
+            document
+                .getElementById("random-btn")
+                .addEventListener("click", random);
+
+            // Card click
+            document.getElementById("card").addEventListener("click", flip);
+
+            // Keyboard shortcuts
+            document.addEventListener("keydown", (e) => {
+                if (e.key === " " || e.key === "Enter") {
+                    e.preventDefault();
+                    flip();
+                } else if (e.key === "ArrowRight") {
+                    next();
+                } else if (e.key === "ArrowLeft") {
+                    prev();
+                } else if (e.key === "r" || e.key === "R") {
+                    random();
+                } else if (e.key === "m" || e.key === "M") {
+                    state.mode = state.mode === "key" ? "desc" : "key";
+                    state.flipped = false;
+                    render();
+                }
+            });
+        });
+    </script>
+</div>
