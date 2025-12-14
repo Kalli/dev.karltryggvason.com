@@ -1,5 +1,14 @@
-homepage.showRecent = true
-homepage.layout = "page"
 colorScheme = "slate"
 footer.showAppearanceSwitcher = true
 article.showAuthor = false
+
+[list]
+  showTableOfContents = false
+  groupByYear = true
+  cardView = true
+  cardViewScreenWidth = false
+
+[homepage]
+    showRecent = true
+    layout = "page"
+    recentLimit = 5
