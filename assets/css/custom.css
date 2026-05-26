@@ -10,3 +10,7 @@ footer {
 figcaption {
     text-align: center;
 }
+
+.max-w-prose {
+    max-width: 100ch !important;
+}
